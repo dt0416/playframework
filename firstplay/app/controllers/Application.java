@@ -56,5 +56,9 @@ public class Application extends Controller {
 //        return ok(uselayoutByIndex.render());
 //        return ok(uselayoutMix.render());
     }
+    
+    public static Result useNotice() {
+    	return ok(useNotice.render());
+    }
 
 }
