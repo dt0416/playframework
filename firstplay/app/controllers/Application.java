@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
 import play.mvc.*;
@@ -59,6 +61,22 @@ public class Application extends Controller {
     
     public static Result useNotice() {
     	return ok(useNotice.render());
+    }
+    
+    /**
+     * Handle JSON request
+     * 使用curl指令測試
+     * curl --header "Content-type: application/json" --request POST --data '{"name": "Guillaume"}' http://localhost:9000/sayHello
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result sayHello() {
+        JsonNode json = request().body().asJson();
+        String name = json.findPath("name").textValue();
+        if(name == null) {
+            return badRequest("Missing parameter [name]\n");
+        } else {
+            return ok("Hello " + name + "\n");
+        }
     }
 
 }
