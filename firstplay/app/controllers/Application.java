@@ -1,11 +1,8 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.libs.F.Callback;
 import play.libs.F.Callback0;
-import play.libs.Json;
 import play.mvc.*;
 import views.html.*;
 
@@ -16,7 +13,7 @@ public class Application extends Controller {
     }
 
     /**
-     * 測試網址:http://www.websocket.org/echo.html
+     * 測試工具:http://www.websocket.org/echo.html
      * Location:ws://localhost:9000/socket
      * Connect-可以看到RESPONSE訊息
      * Send-可以在Play console看到接收到的訊息
@@ -64,42 +61,4 @@ public class Application extends Controller {
     public static Result useNotice() {
     	return ok(useNotice.render());
     }
-    
-    /**
-     * Handle JSON request
-     * 使用curl指令測試
-     * curl --header "Content-type: application/json" --request POST --data '{"name": "Guillaume"}' http://localhost:9000/sayHello
-     */
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result sayHello() {
-        JsonNode json = request().body().asJson();
-        String name = json.findPath("name").textValue();
-        if(name == null) {
-            return badRequest("Missing parameter [name]\n"); // \n是使用curl測試用方便，實際情況不需加
-        } else {
-            return ok("Hello " + name + "\n"); // \n是使用curl測試用方便，實際情況不需加
-        }
-    }
-    
-    /**
-     * Serving a JSON response
-     * 使用curl指令測試
-     * curl --header "Content-type: application/json" --request POST --data '{"name": "Guillaume"}' http://localhost:9000/sayHelloInJSON
-     */
-    @BodyParser.Of(BodyParser.Json.class)
-    public static Result sayHelloInJSON() {
-        JsonNode json = request().body().asJson();
-        ObjectNode result = Json.newObject();
-        String name = json.findPath("name").textValue();
-        if(name == null) {
-            result.put("status", "KO");
-            result.put("message", "Missing parameter [name]");
-            return badRequest(result + "\n"); // \n是使用curl測試用方便，實際情況不需加
-        } else {
-            result.put("status", "OK");
-            result.put("message", "Hello " + name);
-            return ok(result + "\n"); // \n是使用curl測試用方便，實際情況不需加
-        }
-    }
-
 }
