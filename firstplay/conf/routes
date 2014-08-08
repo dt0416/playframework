@@ -7,8 +7,10 @@ GET     /                           controllers.Application.index()
 GET     /socket                     controllers.Application.socket()
 GET     /layoutDemo                 controllers.Application.layoutDemo()
 GET     /useNotice                  controllers.Application.useNotice()
-POST    /sayHello                   controllers.Application.sayHello()
-POST    /sayHelloInJSON             controllers.Application.sayHelloInJSON()
+POST    /sayHelloToJSON             controllers.JsonDemo.sayHello()
+POST    /sayHelloInJSON             controllers.JsonDemo.sayHelloInJSON()
+POST    /sayHelloToXML              controllers.XmlDemo.sayHello()
+POST    /sayHelloInXML              controllers.XmlDemo.sayHelloInXML()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
